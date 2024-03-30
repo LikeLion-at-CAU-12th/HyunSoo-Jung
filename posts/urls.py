@@ -20,9 +20,9 @@ from posts.views import *
 
 urlpatterns = [
     path('', index),
-    path('introduction', hello_world, name = 'hello_world'),
+    # path('introduction', hello_world, name = 'hello_world'),
     path('index', index, name='my-page'),
-    path('page', info_view),
-    # path('post<int:post_id>', get_post_detail, name = "게시글 조회"),
-    # # path('comment<comment_id>', get_comment_detail, name = "댓글 조회")
+    # path('page', info_view),
+    path('post<int:post_id>', get_post_detail, name = "게시글 조회"),
+    # path('comment<comment_id>', get_comment_detail, name = "댓글 조회")
 ]
