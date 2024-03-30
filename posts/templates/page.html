@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likelion</title>
+</head>
+<body>
+    <h1>저와 제 코드리뷰 짝을 소개합니다!!</h1>
+    <h2>Me</h2>
+    {% for info in myinfo_list %}
+        <p>이름: {{ info.myname }}</p>
+        <p>나이: {{ info.myage }}</p>
+        <p>전공: {{ info.mymajor }}</p>
+        <p>깃허브 링크: {{ info.mygit }}</p>
+    {% endfor %}
+
+    <h2>My Code Reviewer</h2>
+    {% for info in myinfo_list %}
+        <p>이름: {{ info.reviewername }}</p>
+        <p>나이: {{ info.reviewerage }}</p>
+        <p>전공: {{ info.reviewermajor }}</p>
+        <p>깃허브 링크: {{ info.reviewergit }}</p>
+    {% endfor %}
+</body>
+</html>
