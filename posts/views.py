@@ -32,43 +32,43 @@ def hello_world(request):
             ]
         })
 
-# def info_view(request):
-#     myinfo_all = myinfo.objects.all()
-#     reviewerinfo_all = reviewerinfo.objects.all()
-#     return render(request, 'index.html', {'myinfo_list' : myinfo_all, 'reviewerinfo_list': reviewerinfo_all})
+def info_view(request):
+    myinfo_all = myinfo.objects.all()
+    reviewerinfo_all = reviewerinfo.objects.all()
+    return render(request, 'index.html', {'myinfo_list' : myinfo_all, 'reviewerinfo_list': reviewerinfo_all})
 
 
 # 4주차
-# posts
-@require_http_methods(["GET"])
-def get_post_detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    post_detail_json = {
-        "post_id" : post.post_id,
-        "title" : post.title,
-        "content" : post.content,
-        "writer" : post.writer,
-        "category" : post.category,
-    }
+# # posts
+# @require_http_methods(["GET"])
+# def get_post_detail(request, post_id):
+#     post = get_object_or_404(Post, pk=post_id)
+#     post_detail_json = {
+#         "post_id" : post.post_id,
+#         "title" : post.title,
+#         "content" : post.content,
+#         "writer" : post.writer,
+#         "category" : post.category,
+#     }
 
-    return JsonResponse({
-        'status' : 200,
-        'message' : '게시글 조회 성공',
-        'data' : post_detail_json
-    })
+#     return JsonResponse({
+#         'status' : 200,
+#         'message' : '게시글 조회 성공',
+#         'data' : post_detail_json
+#     })
 
-#comments
-def get_comment_detail(request, comment_id):
-    comment = get_object_or_404(Comment, pk=comment_id)
-    comment_detail_json = {
-        "post_id" : comment.post_id,
-        "comment_id" : comment.comment_id,
-        "commenter" : comment.commenter,
-        "comment" : comment.comment,
-    }
+# #comments
+# def get_comment_detail(request, comment_id):
+#     comment = get_object_or_404(Comment, pk=comment_id)
+#     comment_detail_json = {
+#         "post_id" : comment.post_id,
+#         "comment_id" : comment.comment_id,
+#         "commenter" : comment.commenter,
+#         "comment" : comment.comment,
+#     }
 
-    return JsonResponse({
-        'status' : 200,
-        'message' : '댓글 조회 성공',
-        'data' : comment_detail_json
-    })
+#     return JsonResponse({
+#         'status' : 200,
+#         'message' : '댓글 조회 성공',
+#         'data' : comment_detail_json
+#     })
