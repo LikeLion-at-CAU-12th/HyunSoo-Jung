@@ -28,5 +28,6 @@ urlpatterns = [
     # path('<int:tag_id>/hashtag', hashtag, name = "해시태그"),
     path('', post_list, name="post_list"),
     path('<int:id>/', post_detail, name="post_detail"),
-    path('<int:id>/comment', comment_list, name="comment_list")
+    path('<int:id>/comment', comment_list, name="comment_list"),
+    path('recent/', recent_post, name="recent_post"),
 ]

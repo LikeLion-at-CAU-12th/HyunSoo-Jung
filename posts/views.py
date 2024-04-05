@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 from posts.models import *
+import json
+import datetime
 
 # Create your views here.
 
@@ -200,4 +202,31 @@ def comment_list(request, id):
             'status' : 200,
             'message' : '댓글 조회 성공',
             'data' : comment_json_all
+        })
+
+
+# 최근 일주일 동안 작성된 게시글 목록 조회하기
+first_date = datetime.date(2024,4,4)
+last_date = datetime.date(2024,4,10)
+
+@require_http_methods(["GET"])
+def recent_post(request, format=None):
+    recent_post_all = Post.objects.all().filter(created_at__range=(first_date,last_date)).order_by('-created_at')
+
+    recent_json_all = []
+
+    for post in recent_post_all:
+        recent_json = {
+            "id" : post.post_id,
+            "writer" : post.writer,
+            "title" : post.title,
+            "content" : post.content,
+            "category" : post.category,
+        }
+        recent_json_all.append(recent_json)
+        
+    return JsonResponse({
+            'status' : 200,
+            'message' : '최신 게시글 조회 성공',
+            'data' : recent_json_all
         })
