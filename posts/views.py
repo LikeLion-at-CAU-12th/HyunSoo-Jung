@@ -10,27 +10,27 @@ def index(request):
     return render(request, 'index.html')
 
 # 3주차
-def hello_world(request):
-    if request.method == "GET":
-        return JsonResponse({
-            'status' : 200,
-            'success' : True,
-            'message' : '메시지 전달 성공!',
-            'data' : [
-                {
-                    # 내 정보
-                    "name" : "정현수",
-                    "age" : 22,
-                    "major" : "LIS"
-                },
-                {
-                    # 코드리뷰 짝 정보
-                    "name" : "김동영",
-                    "age" : 24,
-                    "major" : "CSE"
-                }
-            ]
-        })
+# def hello_world(request):
+#     if request.method == "GET":
+#         return JsonResponse({
+#             'status' : 200,
+#             'success' : True,
+#             'message' : '메시지 전달 성공!',
+#             'data' : [
+#                 {
+#                     # 내 정보
+#                     "name" : "정현수",
+#                     "age" : 22,
+#                     "major" : "LIS"
+#                 },
+#                 {
+#                     # 코드리뷰 짝 정보
+#                     "name" : "김동영",
+#                     "age" : 24,
+#                     "major" : "CSE"
+#                 }
+#             ]
+#         })
 
 # def info_view(request):
 #     myinfo_all = myinfo.objects.all()
