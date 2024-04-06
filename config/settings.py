@@ -135,11 +135,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul' # UTC(협정세계시) -> KST(한국표준시) 로 변경
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False # True -> False 로 변경
 
 
 # Static files (CSS, JavaScript, Images)
