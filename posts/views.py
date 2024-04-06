@@ -218,6 +218,7 @@ def recent_post(request, format=None):
     for post in recent_post_all:
         recent_json = {
             "id" : post.post_id,
+            "date" : post.created_at.strftime('%Y-%m-%d'),
             "writer" : post.writer,
             "title" : post.title,
             "content" : post.content,
