@@ -29,4 +29,13 @@
 ## 4주차 챌린지 과제
 ### 해시태그
 ![Hashtag](image-5.png)
-   
+
+
+---
+
+## 5주차 스탠다드 과제
+### 특정 post에 포함된 모든 comment 읽어오는 API 만들기
+![comment_list](image-6.png)
+
+### created_at 필드 이용하여 4/4~4/10 동안 생성된 post 가져오는 API 만들기
+![recent](image-7.png)
