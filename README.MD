@@ -39,3 +39,7 @@
 
 ### created_at 필드 이용하여 4/4~4/10 동안 생성된 post 가져오는 API 만들기
 ![recent](image-7.png)
+
+## 5주차 챌린지 과제
+### ImageField를 이용하여 이미지를 포함한 post를 생성하는 API 만들기
+![imagefield](image-8.png)
