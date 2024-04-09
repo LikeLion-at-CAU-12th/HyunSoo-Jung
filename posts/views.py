@@ -81,13 +81,14 @@ def get_post_detail(request, post_id):
 def post_list(request):
 
     if request.method == "POST":
-        body = json.loads(request.body.decode('utf-8'))
+        # body = json.loads(request.body.decode('utf-8'))
 
         new_post = Post.objects.create(
-            writer = body['writer'],
-            title = body['title'],
-            content = body['content'],
-            category = body['category']
+            writer = request.POST['writer'],
+            title = request.POST['title'],
+            content = request.POST['content'],
+            image = request.FILES.get('image'), # 추가
+            category = request.POST['category']
         )
 
         new_post_json = {
@@ -95,6 +96,7 @@ def post_list(request):
             "writer" : new_post.writer,
             "title" : new_post.title,
             "content" : new_post.content,
+            "image" : new_post.image.url,
             "category" : new_post.category
         }
 
@@ -115,6 +117,7 @@ def post_list(request):
                 "title" : post.title,
                 "writer" : post.writer,
                 "contetnt" : post.content,
+                # "image" : post.image.url, # 추가
                 "category" : post.category
             }
             post_json_all.append(post_json)
@@ -137,6 +140,7 @@ def post_detail(request, id):
             "writer" : post.writer,
             "title" : post.title,
             "content" : post.content,
+            # "image" : post.image.url, # 추가
             "category" : post.category,
         }
 
@@ -162,6 +166,7 @@ def post_detail(request, id):
             "writer" : update_post.writer,
             "title" : update_post.title,
             "content" : update_post.content,
+            # "image" : update_post.image.url, # 추가
             "category" : update_post.category,
         }
 
@@ -209,6 +214,11 @@ def comment_list(request, id):
 first_date = datetime.date(2024,4,4)
 last_date = datetime.date(2024,4,10)
 
+# now = datetime.datetime.now()
+# recent_week = now - datetime.timedelta(weeks=1)
+# first_date = datetime.date(recent_week.year, recent_week.month, recent_week.day)
+# last_date = datetime.date(now.year, now.month, now.day)
+
 @require_http_methods(["GET"])
 def recent_post(request, format=None):
     recent_post_all = Post.objects.all().filter(created_at__range=(first_date,last_date)).order_by('-created_at')
@@ -222,6 +232,7 @@ def recent_post(request, format=None):
             "writer" : post.writer,
             "title" : post.title,
             "content" : post.content,
+            # "image" : post.image.url, #추가
             "category" : post.category,
         }
         recent_json_all.append(recent_json)

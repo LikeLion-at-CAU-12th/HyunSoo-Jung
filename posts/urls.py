@@ -17,6 +17,9 @@ Including another URLconf
 
 from django.urls import path
 from posts.views import *
+from django.conf.urls.static import static
+from django.conf import settings
+from django.contrib.auth.models import User
 
 urlpatterns = [
     # path('', index),
@@ -31,3 +34,6 @@ urlpatterns = [
     path('<int:id>/comment', comment_list, name="comment_list"),
     path('recent/', recent_post, name="recent_post"),
 ]
+
+# media 경로 추가
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
