@@ -19,10 +19,15 @@ from django.urls import path
 from posts.views import *
 
 urlpatterns = [
-    path('', index),
+    # path('', index),
     # path('introduction', hello_world, name = 'hello_world'),
-    path('index', index, name='my-page'),
-    # path('page', info_view),
-    path('post<int:post_id>', get_post_detail, name = "게시글 조회"),
-    # path('comment<comment_id>', get_comment_detail, name = "댓글 조회")
+    # # path('index', index, name='my-page'),
+    # # path('page', info_view),
+    # path('<int:post_id>', get_post_detail, name = "게시글 조회"),
+    # path('<int:comment_id>/comment', get_comment_detail, name = "댓글 조회"),
+    # path('<int:tag_id>/hashtag', hashtag, name = "해시태그"),
+    path('', post_list, name="post_list"),
+    path('<int:id>/', post_detail, name="post_detail"),
+    path('<int:id>/comment', comment_list, name="comment_list"),
+    path('recent/', recent_post, name="recent_post"),
 ]

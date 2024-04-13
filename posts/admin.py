@@ -10,3 +10,4 @@ from .models import *
 # 4주차
 admin.site.register(Post)
 admin.site.register(Comment)
+admin.site.register(Hashtag)
