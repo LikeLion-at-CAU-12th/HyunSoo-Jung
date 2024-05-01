@@ -20,8 +20,8 @@ from django.db import models
 class Hashtag(models.Model):
     tag = models.TextField(unique=True, max_length=100)
     
-    # def __str__(self):
-    # return self.content
+    def __str__(self):
+      return str(self.tag)
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(verbose_name="작성일시", auto_now_add=True)
@@ -42,6 +42,7 @@ class Post(BaseModel):
     content = models.TextField(verbose_name="내용")
     writer = models.CharField(verbose_name="작성자", max_length=10)
     category = models.CharField(choices=CHOICES, max_length=20)
+    image = models.ImageField(upload_to='images/%Y/%m/%d', blank=True, null=True) # 추가
     tag = models.ManyToManyField(Hashtag, blank=True)
 
 
@@ -52,5 +53,5 @@ class Comment(BaseModel):
     commenter = models.CharField(verbose_name="댓글작성자", max_length=10)
     comment = models.TextField(verbose_name="댓글내용", max_length=500)
 
-    # def __str__(self):
-    #     return self.content
+    def __str__(self):
+        return str(self.commenter)
