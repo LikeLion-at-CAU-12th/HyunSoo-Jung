@@ -6,6 +6,12 @@ from posts.models import *
 import json
 import datetime
 
+from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import Http404
+
 # Create your views here.
 
 def index(request):
@@ -43,10 +49,10 @@ def index(request):
 # 4주차
 # posts
 @require_http_methods(["GET"])
-def get_post_detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def get_post_detail(request, id):
+    post = get_object_or_404(Post, pk=id)
     post_detail_json = {
-        "post_id" : post.post_id,
+        "id" : post.id,
         "title" : post.title,
         "content" : post.content,
         "writer" : post.writer,
@@ -63,7 +69,7 @@ def get_post_detail(request, post_id):
 # def get_comment_detail(request, comment_id):
 #     comment = get_object_or_404(Comment, pk=comment_id)
 #     comment_detail_json = {
-#         "post_id" : comment.post_id,
+#         "id" : comment.id,
 #         "comment_id" : comment.comment_id,
 #         "commenter" : comment.commenter,
 #         "comment" : comment.comment,
@@ -92,7 +98,7 @@ def post_list(request):
         )
 
         new_post_json = {
-            "id" : new_post.post_id,
+            "id" : new_post.id,
             "writer" : new_post.writer,
             "title" : new_post.title,
             "content" : new_post.content,
@@ -113,7 +119,7 @@ def post_list(request):
 
         for post in post_all:
             post_json = {
-                "id" : post.post_id,
+                "id" : post.id,
                 "title" : post.title,
                 "writer" : post.writer,
                 "contetnt" : post.content,
@@ -136,7 +142,7 @@ def post_detail(request, id):
         post = get_object_or_404(Post, pk=id)
 
         post_json = {
-            "id" : post.post_id,
+            "id" : post.id,
             "writer" : post.writer,
             "title" : post.title,
             "content" : post.content,
@@ -162,7 +168,7 @@ def post_detail(request, id):
         update_post.save()
 
         update_post_json = {
-            "id" : update_post.post_id,
+            "id" : update_post.id,
             "writer" : update_post.writer,
             "title" : update_post.title,
             "content" : update_post.content,
@@ -227,7 +233,7 @@ def recent_post(request, format=None):
 
     for post in recent_post_all:
         recent_json = {
-            "id" : post.post_id,
+            "id" : post.id,
             "date" : post.created_at.strftime('%Y-%m-%d'),
             "writer" : post.writer,
             "title" : post.title,
@@ -242,3 +248,44 @@ def recent_post(request, format=None):
             'message' : '최신 게시글 조회 성공',
             'data' : recent_json_all
         })
+
+
+# 7주차
+class PostList(APIView):
+    def post(self, request, format=None):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request, format=None):
+        post = Post.objects.all()
+        serializer = PostSerializer(post, many=True)
+        return Response(serializer.data)
+    
+class PostDetail(APIView):
+    def get(self, request, id):
+        post = get_object_or_404(Post, pk=id)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+    
+    def put(self, request, id):
+        post = get_object_or_404(Post, pk=id)
+        serializer = PostSerializer(post, data=request.data)
+        if serializer.is_vaild():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id):
+        post = get_object_or_404(Post, pk=id)
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class CommentList(APIView):
+    def get(self, request, id):
+        comment = get_object_or_404(Comment, pk=id)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
