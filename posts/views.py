@@ -286,6 +286,6 @@ class PostDetail(APIView):
 
 class CommentList(APIView):
     def get(self, request, id):
-        comment = get_object_or_404(Comment, pk=id)
-        serializer = CommentSerializer(comment)
+        comment = Comment.objects.filter(post_id=id)
+        serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
