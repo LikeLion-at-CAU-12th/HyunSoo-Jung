@@ -56,3 +56,4 @@
 
 ## 7주차 스탠다드 과제
 ### comment API
+![DRF comment API](image-11.png)
