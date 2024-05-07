@@ -66,3 +66,6 @@ PostList
 
 PostDetail
 ![PostDetailGenericAPIView](image-13.png)
+
+### Swagger
+![Swagger](image-14.png)
