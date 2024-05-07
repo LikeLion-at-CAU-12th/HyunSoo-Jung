@@ -22,6 +22,15 @@ from django.http import Http404
 # from rest_framework.serializers import BaseSerializer
 from rest_framework import generics
 
+# Swagger
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+# from rest_framework.pagination import PageNumberPagination
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+
 # Create your views here.
 
 def index(request):
