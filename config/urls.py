@@ -24,9 +24,9 @@ from drf_yasg       import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="프로젝트 이름(예: humanscape-project)",
-        default_version='프로젝트 버전(예: 1.1.1)',
-        description="해당 문서 설명(예: humanscape-project API 문서)",
+        title="Post", # 프로젝트 이름
+        default_version='', # 프로젝트 버전
+        description="", # 문서 설명
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="이메일"), # 부가정보
         license=openapi.License(name="mit"), # 부가정보
