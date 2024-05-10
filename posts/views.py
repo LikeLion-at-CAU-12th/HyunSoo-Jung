@@ -24,12 +24,14 @@ from rest_framework import generics
 
 # Swagger
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser, AllowAny
 # from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
+from rest_framework.exceptions import PermissionDenied, NotAuthenticated
 
 # Create your views here.
 
@@ -271,6 +273,7 @@ def recent_post(request, format=None):
 
 # 7주차
 class PostList(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     def post(self, request, format=None):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
@@ -301,14 +304,37 @@ class PostDetail(APIView):
         post = get_object_or_404(Post, pk=id)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+# 7주차    
 # 스탠다드 과제
 class CommentList(APIView):
     def get(self, request, id):
         comment = Comment.objects.filter(post_id=id)
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
-    
+
+# 8주차
+# 스탠다드 과제
+# header에 입력한 key 값이 올바른 사용자만 모든 API 요청 허용하기
+# 게시글 작성자만 수정과 삭제 가능, 이외의 사용자는 읽기 권한만(IsAuthenticatedOrReadOnly)
+
+# key 값을 확인할 custom permission
+class CorrectKey(BasePermission):
+ def has_permission(self, request, view):
+        return request.headers.get('key') == 'secret'
+
+# # 게시글 작성자인지 확인할 custom permission
+# class IsOwner(BasePermission):
+#     SAFE_METHODS = ('GET')
+#     def has_object_permission(self, request, view, obj):
+#         if obj.writer == request.user:
+#             return True
+#         else:
+#             if request.methods == self.SAFE_METHODS:
+#                 return True
+
+            
+# 7주차
 # 챌린지 과제
 class PostListGenericAPIView(generics.ListAPIView):
     queryset = Post.objects.all()
@@ -318,3 +344,5 @@ class PostDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'post_id'
+
+    permission_classes = [CorrectKey, IsAuthenticatedOrReadOnly]

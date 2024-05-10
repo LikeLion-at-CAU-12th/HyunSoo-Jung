@@ -69,3 +69,8 @@ PostDetail
 
 ### Swagger
 ![Swagger](image-14.png)
+
+
+---
+## 8주차 스탠다드 과제
+![alt text](image-15.png)

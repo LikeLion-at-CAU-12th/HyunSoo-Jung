@@ -40,7 +40,7 @@ class Post(BaseModel):
     post_id = models.AutoField(primary_key=True)
     title = models.CharField(verbose_name="제목", max_length=20)
     content = models.TextField(verbose_name="내용")
-    writer = models.CharField(verbose_name="작성자", max_length=10)
+    writer = models.CharField(verbose_name="작성자", max_length=10, null=False)
     category = models.CharField(choices=CHOICES, max_length=20)
     image = models.ImageField(upload_to='images/%Y/%m/%d', blank=True, null=True) # 추가
     tag = models.ManyToManyField(Hashtag, blank=True)
