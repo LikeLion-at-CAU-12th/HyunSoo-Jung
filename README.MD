@@ -43,3 +43,17 @@
 ## 5주차 챌린지 과제
 ### ImageField를 이용하여 이미지를 포함한 post를 생성하는 API 만들기
 ![imagefield](image-8.png)
+
+
+---
+
+## 6주차 스탠다드 과제
+### 배포한 서버에서 로그 확인해보기
+![로그](image-10.png)
+
+
+---
+
+## 7주차 스탠다드 과제
+### comment API
+![DRF comment API](image-11.png)
