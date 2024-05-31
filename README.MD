@@ -57,3 +57,15 @@
 ## 7주차 스탠다드 과제
 ### comment API
 ![DRF comment API](image-11.png)
+
+## 7주차 챌린지 과제
+### GenericAPIView
+### post API
+PostList
+![PostListGenricAPIView](image-12.png)
+
+PostDetail
+![PostDetailGenericAPIView](image-13.png)
+
+### Swagger
+![Swagger](image-14.png)

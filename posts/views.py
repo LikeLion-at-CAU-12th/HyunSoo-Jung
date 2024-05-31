@@ -7,10 +7,29 @@ import json
 import datetime
 
 from .serializers import *
+
+# APIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+
+# GenericAPIView
+# from rest_framework.generics import GenericAPIView
+# from rest_framework.authetication import BaseAuthentication
+# from rest_framework.permissions import BasePermission
+# from django.db.models.query import QuerySet
+# from rest_framework.serializers import BaseSerializer
+from rest_framework import generics
+
+# Swagger
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+# from rest_framework.pagination import PageNumberPagination
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 
 # Create your views here.
 
@@ -283,9 +302,19 @@ class PostDetail(APIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-
+# 스탠다드 과제
 class CommentList(APIView):
     def get(self, request, id):
         comment = Comment.objects.filter(post_id=id)
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
+    
+# 챌린지 과제
+class PostListGenericAPIView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    lookup_field = 'post_id'
