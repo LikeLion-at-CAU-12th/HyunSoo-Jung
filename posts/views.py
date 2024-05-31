@@ -27,8 +27,8 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser, AllowAny
 # from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
+# from drf_yasg.utils import swagger_auto_schema
+# from drf_yasg import openapi
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
 from rest_framework.exceptions import PermissionDenied, NotAuthenticated
@@ -114,7 +114,7 @@ def post_list(request):
             writer = request.POST['writer'],
             title = request.POST['title'],
             content = request.POST['content'],
-            image = request.FILES.get('image'), # 추가
+            # image = request.FILES.get('image'), # 추가
             category = request.POST['category']
         )
 
@@ -123,7 +123,7 @@ def post_list(request):
             "writer" : new_post.writer,
             "title" : new_post.title,
             "content" : new_post.content,
-            "image" : new_post.image.url,
+            # "image" : new_post.image.url,
             "category" : new_post.category
         }
 
