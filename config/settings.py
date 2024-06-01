@@ -183,8 +183,27 @@ from datetime import timedelta
 SITE_ID = 1
 REST_USE_JWT = True
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None # username 필드 사용 x
 ACCOUNT_EMAIL_REQUIRED = True # email 필드 사용
-ACCOUNT_USERNAME_REQUIRED = True # username 필드 사용
+ACCOUNT_USERNAME_REQUIRED = False # username 필드 사용
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # ACCOUNT_EMAIL_VERIFICATION = 'none' # 회원가입 과정에서 이메일 인증 사용 x
