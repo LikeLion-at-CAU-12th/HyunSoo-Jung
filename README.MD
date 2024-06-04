@@ -74,3 +74,9 @@ PostDetail
 ---
 ## 8주차 스탠다드 과제
 ![alt text](image-15.png)
+
+
+---
+
+## 9주차 스탠다드 과제
+![검증](image-16.png)
