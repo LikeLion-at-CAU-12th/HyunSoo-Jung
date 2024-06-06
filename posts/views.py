@@ -273,7 +273,7 @@ def recent_post(request, format=None):
 
 # 7주차
 class PostList(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     def post(self, request, format=None):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
