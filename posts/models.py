@@ -46,7 +46,7 @@ class Post(BaseModel):
     # image = models.ImageField(upload_to='images/%Y/%m/%d', blank=True, null=True) # 추가
     # tag = models.ManyToManyField(Hashtag, blank=True)
     thumbnail = models.ImageField(null=True, blank=True, verbose_name="썸네일", validators=[unvalidate_file_extension])
-
+    # thumbnail_url = models.URLField(max_length=200, blank=True, null=True)
 
 class Comment(BaseModel):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
