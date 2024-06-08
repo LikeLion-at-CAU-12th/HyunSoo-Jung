@@ -35,12 +35,12 @@ urlpatterns = [
     # path('<int:id>/comment', comment_list, name="comment_list"),
     # path('recent/', recent_post, name="recent_post"),
 
-    # path('', PostList.as_view()),
-    # path('<int:id>/', PostDetail.as_view()),
-    # path('<int:id>/comment/', CommentList.as_view())
-    path('', PostListGenericAPIView.as_view()),
-    path('<int:post_id>/', PostDetailGenericAPIView.as_view())
+    path('', PostList.as_view()),
+    path('<int:id>/', PostDetail.as_view()),
+    path('<int:id>/comment/', CommentList.as_view()),
+    # path('', PostListGenericAPIView.as_view()),
+    # path('<int:post_id>/', PostDetailGenericAPIView.as_view())
 ]
 
 # media 경로 추가
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

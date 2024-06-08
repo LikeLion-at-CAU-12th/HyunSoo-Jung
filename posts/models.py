@@ -1,4 +1,5 @@
 from django.db import models
+from .validators import unvalidate_file_extension
 
 # Create your models here.
 
@@ -17,11 +18,11 @@ from django.db import models
 
 
 # 4주차 모델
-class Hashtag(models.Model):
-    tag = models.TextField(unique=True, max_length=100)
+# class Hashtag(models.Model):
+#     tag = models.TextField(unique=True, max_length=100)
     
-    def __str__(self):
-      return str(self.tag)
+    # def __str__(self):
+    #   return str(self.tag)
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(verbose_name="작성일시", auto_now_add=True)
@@ -43,8 +44,9 @@ class Post(BaseModel):
     writer = models.CharField(verbose_name="작성자", max_length=10, null=False)
     category = models.CharField(choices=CHOICES, max_length=20)
     # image = models.ImageField(upload_to='images/%Y/%m/%d', blank=True, null=True) # 추가
-    tag = models.ManyToManyField(Hashtag, blank=True)
-
+    # tag = models.ManyToManyField(Hashtag, blank=True)
+    thumbnail = models.ImageField(null=True, blank=True, verbose_name="썸네일", validators=[unvalidate_file_extension])
+    # thumbnail_url = models.URLField(max_length=200, blank=True, null=True)
 
 class Comment(BaseModel):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from .models import *
 
+import boto3
+from django.conf import settings
+from uuid import uuid4
+
+
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
