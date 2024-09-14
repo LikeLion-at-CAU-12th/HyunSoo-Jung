@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
-from posts.models import *
+from django.conf import settings
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME
+from .models import *
 import json
 import datetime
 
@@ -32,6 +34,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
 from rest_framework.exceptions import PermissionDenied, NotAuthenticated
+
+# s3
+import boto3
+import uuid
 
 # Create your views here.
 
@@ -273,11 +279,29 @@ def recent_post(request, format=None):
 
 # 7주차
 class PostList(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def upload(self, file):
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_REGION
+        )
+        key = file.name
+        s3_client.upload_fileobj(file, settings.AWS_STORAGE_BUCKET_NAME, key)
+        url = f'https://{settings.AWS_S3_CUSTOM_DOMAIN}/{key}'
+        return url
+    
     def post(self, request, format=None):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            image = request.FILES.get("thumbnail")
+            if image:
+                url = self.upload(image)
+                serializer.save(thumbnail=url)
+            else:
+                serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -322,21 +346,11 @@ class CommentList(APIView):
 class CorrectKey(BasePermission):
  def has_permission(self, request, view):
         return request.headers.get('key') == 'secret'
-
-# # 게시글 작성자인지 확인할 custom permission
-# class IsOwner(BasePermission):
-#     SAFE_METHODS = ('GET')
-#     def has_object_permission(self, request, view, obj):
-#         if obj.writer == request.user:
-#             return True
-#         else:
-#             if request.methods == self.SAFE_METHODS:
-#                 return True
-
+ 
             
 # 7주차
 # 챌린지 과제
-class PostListGenericAPIView(generics.ListAPIView):
+class PostListGenericAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
